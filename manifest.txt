@@ -1,0 +1,9 @@
+SKILL.md
+README.md
+requirements.txt
+install.sh
+install.ps1
+scripts/business_plan_pdf.py
+examples/cimol.sample.json
+docs/instalacao_terminal.md
+docs/prompt_para_codex.md

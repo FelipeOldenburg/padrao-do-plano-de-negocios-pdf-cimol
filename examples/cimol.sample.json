@@ -1,0 +1,223 @@
+{
+  "title": "Plano de Negócios",
+  "project_name": "Plataforma de Gestão Escolar CIMOL",
+  "subtitle": "Solução web para centralizar horários, salas, comunicação institucional e operações do CPD, com foco inicial no contexto escolar do CIMOL e potencial de expansão para outras instituições.",
+  "updated_label": "Atualizado em setembro de 2026",
+  "cover_footer": "Documento sintético - máximo de 5 páginas",
+  "summary_cards": [
+    {
+      "label": "Problema",
+      "text": "Informações dispersas, trocas de sala lentas, excesso de consultas ao CPD e pouca visibilidade de horários e serviços escolares."
+    },
+    {
+      "label": "Solução",
+      "text": "Portal público + painel interno para gestão de horários, salas por bloco/capacidade, exportação em PDF, eventos e comunicação."
+    },
+    {
+      "label": "Público-alvo",
+      "text": "Escolas técnicas, escolas de ensino médio, redes públicas/privadas e equipes administrativas que precisam de gestão operacional simples."
+    },
+    {
+      "label": "Estágio atual",
+      "text": "MVP estruturado e refinado com apoio do Codex, já validado no contexto do CIMOL e priorizado a partir de feedbacks reais do ambiente escolar."
+    }
+  ],
+  "value_proposition": "Proposta de valor central: reduzir o tempo gasto com buscas de informação e remanejamentos operacionais, melhorar a experiência de alunos e professores e dar mais autonomia ao CPD.",
+  "page2": {
+    "left_sections": [
+      {
+        "title": "Dor do cliente",
+        "bullets": [
+          "Horários, avisos e serviços ficam espalhados entre murais, PDFs, grupos e atendimentos presenciais.",
+          "Trocas de sala e realocação de turmas exigem intervenção manual e comunicação lenta.",
+          "Alunos e professores perdem tempo para localizar setores, eventos, laboratórios e recursos disponíveis."
+        ]
+      },
+      {
+        "title": "Solução proposta",
+        "bullets": [
+          "Portal responsivo com consulta rápida de horários, setores, mapa, eventos, salas e laboratórios.",
+          "Painel restrito ao CPD para cadastrar salas por bloco/capacidade, remanejar turmas e publicar PDFs de horários.",
+          "Módulos complementares: ouvidoria, merenda, acessibilidade e comunicação institucional."
+        ]
+      }
+    ],
+    "right_sections": [
+      {
+        "title": "Evidências de mercado",
+        "paragraphs": [
+          "O setor é relevante e escalável: o Censo Escolar 2024 do Inep registra 47,1 milhões de matrículas em 179,3 mil escolas. O Catálogo de Escolas do Inep informa que a base nacional reúne mais de 226 mil escolas e um universo de mais de 50 milhões de pessoas.",
+          "A pesquisa TIC Educação 2024, do Cetic.br, mostra continuidade no uso e na apropriação de tecnologias digitais nas escolas brasileiras, inclusive em gestão e ensino, o que fortalece a aderência de uma plataforma escolar prática e modular."
+        ]
+      },
+      {
+        "title": "Público-alvo inicial",
+        "bullets": [
+          "Escola-piloto: CIMOL.",
+          "Expansão: escolas técnicas, redes estaduais e escolas privadas de médio porte.",
+          "Decisor: direção, CPD/TI, coordenação e secretaria."
+        ]
+      }
+    ],
+    "differentials": [
+      {
+        "differential": "Foco operacional escolar",
+        "impact": "Não é só agenda: resolve salas, horários, comunicação e recursos físicos."
+      },
+      {
+        "differential": "Baixo custo e modularidade",
+        "impact": "Permite implantar apenas os módulos necessários e crescer por fases."
+      },
+      {
+        "differential": "Aderência local",
+        "impact": "Escopo foi desenhado com base em feedback real do contexto do CIMOL."
+      },
+      {
+        "differential": "Acessibilidade e utilidade pública",
+        "impact": "Portal aberto para consulta + gestão interna restrita ao CPD."
+      }
+    ]
+  },
+  "page3": {
+    "business_model": [
+      {
+        "source": "Taxa de implantação",
+        "description": "Configuração inicial, personalização institucional, cadastro de salas/blocos e treinamento."
+      },
+      {
+        "source": "Assinatura mensal (SaaS)",
+        "description": "Uso da plataforma, hospedagem, suporte básico e atualizações contínuas."
+      },
+      {
+        "source": "Serviços adicionais",
+        "description": "Treinamento extra, customizações, relatórios, migração de dados e novos módulos."
+      }
+    ],
+    "pricing_packages": [
+      {
+        "plan": "Start",
+        "price": "R$ 399/mês + R$ 2.500 implantação",
+        "fit": "Escolas pequenas com portal e gestão básica."
+      },
+      {
+        "plan": "Essencial",
+        "price": "R$ 799/mês + R$ 4.500 implantação",
+        "fit": "Escolas de médio porte com CPD, salas e PDFs."
+      },
+      {
+        "plan": "Institucional",
+        "price": "R$ 1.290/mês + R$ 7.500 implantação",
+        "fit": "Redes ou unidades com customização e múltiplos módulos."
+      }
+    ],
+    "consolidated": [
+      "Escopo refinado no Codex e ao longo do projeto: horários, categorias, salas, laboratórios, mapa, eventos, setores, acessibilidade e recursos.",
+      "Prioridade operacional definida: painel do CPD para controlar todas as salas, cadastrar blocos/capacidades e publicar horários em PDF.",
+      "Validação do fluxo principal com foco em utilidade pública para alunos/professores e eficiência administrativa para a escola."
+    ],
+    "roadmap": [
+      {
+        "phase": "1. MVP",
+        "goal": "Consulta pública de horários + painel do CPD + base de salas por bloco/capacidade."
+      },
+      {
+        "phase": "2. Consolidação",
+        "goal": "Eventos, recursos, mapa, laboratórios, acessibilidade e exportação completa de PDFs."
+      },
+      {
+        "phase": "3. Escala",
+        "goal": "Replicação para outras escolas, painel analítico e relatórios gerenciais."
+      }
+    ]
+  },
+  "page4": {
+    "left_sections": [
+      {
+        "title": "Aquisição de clientes",
+        "bullets": [
+          "Estratégia inicial de prova social: caso piloto no CIMOL.",
+          "Demonstrações para direção, coordenação e CPD de outras escolas da região.",
+          "Portfólio com resultados: redução de dúvidas operacionais, ganho de tempo e melhor organização.",
+          "Canais: visitas, rede de contatos educacionais, apresentação institucional e QR codes de acesso."
+        ]
+      },
+      {
+        "title": "Indicadores-chave",
+        "bullets": [
+          "Número de escolas ativas.",
+          "Receita recorrente mensal (MRR).",
+          "Tempo médio para remanejar turmas/salas.",
+          "Acessos ao portal e satisfação dos usuários."
+        ]
+      },
+      {
+        "title": "Riscos e mitigação",
+        "bullets": [
+          "Adoção lenta -> treinamento enxuto e implantação por etapas.",
+          "Dependência de customização -> produto modular para evitar escopo excessivo.",
+          "Limitações orçamentárias das escolas -> planos escalonados e foco em retorno operacional."
+        ]
+      }
+    ],
+    "projection": [
+      {
+        "item": "Meta de clientes no 1º ano",
+        "value": "6 escolas"
+      },
+      {
+        "item": "Ticket médio mensal",
+        "value": "R$ 850"
+      },
+      {
+        "item": "Receita anual recorrente",
+        "value": "R$ 61.200"
+      },
+      {
+        "item": "Receita com implantações",
+        "value": "R$ 27.000"
+      },
+      {
+        "item": "Serviços extras / treinamento",
+        "value": "R$ 9.000"
+      },
+      {
+        "item": "Receita bruta anual projetada",
+        "value": "R$ 97.200",
+        "highlight": true
+      },
+      {
+        "item": "Custos anuais estimados",
+        "value": "R$ 43.800"
+      },
+      {
+        "item": "Resultado operacional estimado",
+        "value": "R$ 53.400",
+        "highlight": true
+      },
+      {
+        "item": "Ponto de equilíbrio",
+        "value": "aprox. 4 escolas ativas"
+      }
+    ],
+    "investment": {
+      "amount": "R$ 18.000",
+      "use": "Hospedagem, domínio, ajustes do MVP, testes, marketing inicial e suporte de implantação."
+    },
+    "executive_conclusion": "Conclusão executiva: o projeto nasce com problema real, validação contextual e possibilidade de escalar como SaaS educacional enxuto. O foco no CPD e na gestão de salas torna a solução útil desde o primeiro uso, enquanto os demais módulos ampliam a proposta de valor."
+  },
+  "page5": {
+    "title": "4. Anexos",
+    "intro": "Os QR codes abaixo foram anexados para complementar a apresentação do projeto. Eles podem ser usados em slides, documentos ou demonstrações do plano de negócios.",
+    "qr_cards": [
+      {
+        "title": "QR Code 1",
+        "subtitle": "GitHub / repositório do projeto"
+      },
+      {
+        "title": "QR Code 2",
+        "subtitle": "Aplicação teste / demonstração"
+      }
+    ],
+    "sources": "Fontes de atualização utilizadas: Inep (Censo Escolar 2024/2025 e Catálogo de Escolas), Cetic.br/NIC.br (TIC Educação 2024)."
+  }
+}
