@@ -59,8 +59,9 @@ Antes de gerar o PDF, peça estas informações básicas em uma única mensagem 
 - Problema, solução e estágio atual.
 - Cores da marca (códigos hex, se houver) e estilo desejado para a capa: `minimal`, `geometric` ou `bold`.
 - Nome/ano ou frase curta para a capa, se desejado.
+- Logo do projeto em PNG ou JPG, caso exista.
 
-Pergunte também por diferenciais, modelo de receita, projeção e QR codes quando eles não estiverem no contexto. Não invente identidade visual: se a pessoa não tiver cores, ofereça o tema CIMOL como padrão e peça confirmação antes de usá-lo.
+Se houver logo, peça o arquivo e observe suas cores e formas para orientar a paleta e o estilo da capa quando não forem informadas cores da marca; cores explícitas da pessoa sempre têm prioridade. Inclua a logo como elemento decorativo na capa, preservando-a inteira e legível sobre um cartão claro. Pergunte também por diferenciais, modelo de receita, projeção e QR codes quando eles não estiverem no contexto. Não invente identidade visual: se a pessoa não tiver cores nem logo, ofereça o tema CIMOL como padrão e peça confirmação antes de usá-lo.
 
 ## Fluxo de trabalho
 
@@ -84,7 +85,7 @@ python scripts/business_plan_pdf.py \
 
 - Página A4, com margens e respiro visual.
 - A paleta vem de `branding` no JSON: `primary_color`, `secondary_color`, `accent_color`, `text_color`, `muted_color`, `border_color` e `highlight_color` aceitam hexadecimal.
-- A capa usa `branding.cover_style`: `minimal`, `geometric` (padrão) ou `bold`; `cover_label` adiciona uma identificação curta no topo.
+- A capa usa `branding.cover_style`: `minimal`, `geometric` (padrão) ou `bold`; `cover_label` adiciona uma identificação curta no topo; `logo_path` recebe uma logo PNG/JPG e a aplica em um cartão de alto contraste.
 - Sem `branding`, usar a paleta CIMOL: principal `#0F172A`, secundária `#0B2447`, destaque `#E0EAFF` e bordas `#CBD5E1`.
 - Centralizar tabelas dentro da área útil, mantendo folga lateral; nunca encostá-las visualmente nas bordas da página.
 - Rodapé com data/descrição à esquerda e número da página à direita.

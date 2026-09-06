@@ -5,8 +5,8 @@ Use a skill `padrao-do-plano-de-negocios-pdf-cimol` deste repositório para cria
 Tarefa:
 1. Leia o `SKILL.md`.
 2. Use `examples/cimol.sample.json` como formato base.
-3. Antes de montar o JSON, peça nome, segmento/público, problema/solução, cores da marca e estilo de capa (`minimal`, `geometric` ou `bold`).
-4. Atualize o conteúdo e `branding` conforme o projeto atual; só use o tema CIMOL se a pessoa confirmar que não tem identidade visual própria.
+3. Antes de montar o JSON, peça nome, segmento/público, problema/solução, cores da marca, estilo de capa (`minimal`, `geometric` ou `bold`) e a logo em PNG/JPG, caso exista.
+4. Quando receber uma logo, use suas cores e formas como referência e informe o caminho em `branding.logo_path`; ela deve decorar a capa. Só use o tema CIMOL se a pessoa confirmar que não tem identidade visual própria.
 5. Gere o PDF com `scripts/business_plan_pdf.py`.
 6. O PDF final deve ter exatamente 5 páginas, com tabelas centralizadas e afastadas das bordas.
 7. Se houver QR codes, coloque-os na página 5, em anexos, lado a lado.

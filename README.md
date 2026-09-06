@@ -58,7 +58,7 @@ Crie um plano de negócios para uma plataforma de gestão escolar. Use os dados 
 marque valores não comprovados como estimativas e gere o PDF com QR codes em anexo.
 ```
 
-Antes de gerar, a skill pede um briefing curto: nome do projeto, segmento/público, problema e solução, cores da marca e estilo de capa (`minimal`, `geometric` ou `bold`). Ela só usa o visual CIMOL como padrão quando a pessoa confirmar que não possui identidade visual própria.
+Antes de gerar, a skill pede um briefing curto: nome do projeto, segmento/público, problema e solução, cores da marca, estilo de capa (`minimal`, `geometric` ou `bold`) e a logo do projeto, caso exista. A logo orienta a escolha da paleta quando não houver cores informadas e aparece como decoração legível na capa. Ela só usa o visual CIMOL como padrão quando a pessoa confirmar que não possui identidade visual própria.
 
 ## Personalização visual
 
@@ -70,11 +70,13 @@ Inclua `branding` no JSON para adaptar o material ao projeto. Todos os campos de
   "secondary_color": "#0E7490",
   "accent_color": "#E0F2FE",
   "cover_style": "geometric",
-  "cover_label": "NOME DA MARCA | PLANO 2026"
+  "cover_label": "NOME DA MARCA | PLANO 2026",
+  "logo_path": "./minha-logo.png"
 }
 ```
 
 - `cover_style`: `minimal`, `geometric` (padrão) ou `bold`.
+- `logo_path`: PNG ou JPG da marca (PNG transparente é preferível). Pode ser um caminho relativo ao arquivo JSON; a imagem é usada em um cartão claro na capa para manter contraste.
 - `text_color`, `muted_color`, `border_color` e `highlight_color` refinam texto, bordas e destaques quando necessário.
 - Tabelas são centralizadas dentro da área útil, preservando espaço lateral e evitando o efeito de conteúdo encostado na página.
 
@@ -85,7 +87,7 @@ Copie `examples/cimol.sample.json` e edite-o; ele é a referência completa do f
 | Campo | Conteúdo |
 | --- | --- |
 | `title`, `project_name`, `subtitle` | Identificação do plano e do projeto |
-| `branding` | Cores, estilo e rótulo da capa do projeto |
+| `branding` | Cores, estilo, rótulo e logo opcional da capa do projeto |
 | `summary_cards` | Problema, solução, público-alvo e estágio |
 | `page2` | Oportunidade, mercado e diferenciais |
 | `page3` | Modelo de negócio, preços, consolidados e roadmap |

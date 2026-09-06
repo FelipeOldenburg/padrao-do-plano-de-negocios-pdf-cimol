@@ -24,6 +24,7 @@ from reportlab.lib.enums import TA_CENTER
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
 from reportlab.lib.units import cm
+from reportlab.lib.utils import ImageReader
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.platypus import (
@@ -225,6 +226,45 @@ def centered(table: Table) -> Table:
     return table
 
 
+def cover_logo_path(data: dict[str, Any]) -> str | None:
+    """Valida a logo opcional usada para decorar a capa."""
+    logo_path = data.get("branding", {}).get("logo_path")
+    if not logo_path:
+        return None
+    path = Path(str(logo_path))
+    if not path.is_file():
+        raise FileNotFoundError(f"Logo não encontrada: {path}")
+    if path.suffix.lower() not in {".png", ".jpg", ".jpeg"}:
+        raise ValueError("A logo deve estar em PNG ou JPG.")
+    try:
+        with PILImage.open(path) as logo:
+            logo.verify()
+    except (OSError, ValueError) as error:
+        raise ValueError(f"Não foi possível ler a logo: {path}") from error
+    return str(path)
+
+
+def draw_cover_logo(c, logo_path: str) -> None:
+    """Desenha a logo sobre um cartão claro para preservar contraste na capa."""
+    logo = ImageReader(logo_path)
+    original_width, original_height = logo.getSize()
+    max_width, max_height = 3.0 * cm, 1.35 * cm
+    scale = min(max_width / original_width, max_height / original_height)
+    width, height = original_width * scale, original_height * scale
+    card_x, card_y = 1.35 * cm, PAGE_HEIGHT - 2.45 * cm
+    card_width, card_height = max_width + 0.45 * cm, max_height + 0.45 * cm
+    c.setFillColor(colors.Color(1, 1, 1, alpha=0.96))
+    c.roundRect(card_x, card_y, card_width, card_height, 0.14 * cm, stroke=0, fill=1)
+    c.drawImage(
+        logo,
+        card_x + (card_width - width) / 2,
+        card_y + (card_height - height) / 2,
+        width=width,
+        height=height,
+        mask="auto",
+    )
+
+
 def cover_canvas(c, doc, data: dict[str, Any]) -> None:
     branding = data.get("branding", {})
     cover_style = str(branding.get("cover_style", "geometric")).lower()
@@ -244,6 +284,9 @@ def cover_canvas(c, doc, data: dict[str, Any]) -> None:
         c.setFont(BOLD_FONT, 8)
         c.setFillColor(WHITE)
         c.drawRightString(PAGE_WIDTH - 1.4 * cm, PAGE_HEIGHT - 0.8 * cm, str(branding["cover_label"]))
+    logo_path = cover_logo_path(data)
+    if logo_path:
+        draw_cover_logo(c, logo_path)
 
     c.setStrokeColor(BORDER)
     c.line(1.3 * cm, 1.1 * cm, PAGE_WIDTH - 1.3 * cm, 1.1 * cm)
@@ -316,6 +359,7 @@ def qr_image(path: str | None, label: str) -> Image:
 
 def build_pdf(data: dict[str, Any], output: str, qr1: str | None = None, qr2: str | None = None) -> None:
     apply_branding(data)
+    cover_logo_path(data)
     register_fonts()
     styles = make_styles()
     story: list[Any] = []
@@ -527,8 +571,15 @@ def main() -> None:
     parser.add_argument("--qr2", default=None, help="Imagem do QR code 2.")
     args = parser.parse_args()
 
-    with open(args.input, "r", encoding="utf-8") as f:
+    input_path = Path(args.input).resolve()
+    with input_path.open("r", encoding="utf-8") as f:
         data = json.load(f)
+
+    branding = data.get("branding", {})
+    if branding.get("logo_path"):
+        logo_path = Path(str(branding["logo_path"]))
+        if not logo_path.is_absolute():
+            branding["logo_path"] = str((input_path.parent / logo_path).resolve())
 
     build_pdf(data, args.output, qr1=args.qr1, qr2=args.qr2)
 

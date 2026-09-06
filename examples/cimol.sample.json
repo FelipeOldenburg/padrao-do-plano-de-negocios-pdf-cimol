@@ -11,7 +11,8 @@
     "border_color": "#CBD5E1",
     "highlight_color": "#DCFCE7",
     "cover_style": "geometric",
-    "cover_label": "CIMOL | PLANO 2026"
+    "cover_label": "CIMOL | PLANO 2026",
+    "logo_path": null
   },
   "updated_label": "Atualizado em setembro de 2026",
   "cover_footer": "Documento sintético - máximo de 5 páginas",
