@@ -5,7 +5,7 @@ description: Gere PDFs de plano de negócios no padrão visual CIMOL, com capa, 
 
 # Skill: Padrão-do-plano-de-negocios-pdf-CIMOL
 
-Use esta skill quando o usuário pedir um **plano de negócios em PDF**, especialmente no padrão visual CIMOL: documento curto, bonito, objetivo, com linguagem escolar/profissional e limite máximo de 5 páginas.
+Use esta skill quando o usuário pedir um **plano de negócios em PDF**, especialmente no padrão visual CIMOL: documento curto, bonito, objetivo, com linguagem escolar/profissional e limite máximo de 5 páginas. Adapte a identidade visual ao projeto da pessoa; CIMOL é o padrão de partida, não uma paleta obrigatória.
 
 ## Resultado esperado
 
@@ -51,19 +51,20 @@ Produzir um PDF em A4 com **até 5 páginas**. O gerador entrega cinco páginas 
 - Usar valores financeiros plausíveis e marcados como estimados quando não houver dados reais.
 - Manter o documento pronto para escola, banca, professor ou apresentação institucional.
 
+## Briefing obrigatório
+
+Antes de gerar o PDF, peça estas informações básicas em uma única mensagem curta:
+
+- Nome do projeto, segmento e público-alvo.
+- Problema, solução e estágio atual.
+- Cores da marca (códigos hex, se houver) e estilo desejado para a capa: `minimal`, `geometric` ou `bold`.
+- Nome/ano ou frase curta para a capa, se desejado.
+
+Pergunte também por diferenciais, modelo de receita, projeção e QR codes quando eles não estiverem no contexto. Não invente identidade visual: se a pessoa não tiver cores, ofereça o tema CIMOL como padrão e peça confirmação antes de usá-lo.
+
 ## Fluxo de trabalho
 
-1. Coletar ou inferir estes dados:
-   - Nome do projeto.
-   - Problema resolvido.
-   - Solução proposta.
-   - Público-alvo.
-   - Estágio atual do projeto.
-   - Diferenciais.
-   - Modelo de receita.
-   - Pacotes ou formas de cobrança.
-   - Projeção financeira estimada.
-   - Dois QR codes para anexo, quando existirem.
+1. Com o briefing respondido, reunir os dados do negócio e a identidade visual.
 
 2. Criar ou preencher um arquivo JSON no formato de `examples/cimol.sample.json`.
 
@@ -79,17 +80,16 @@ python scripts/business_plan_pdf.py \
 
 4. Confirmar que o PDF final possui no máximo 5 páginas.
 
-## Padrão visual obrigatório
+## Padrão visual
 
-- Página A4.
-- Margens aproximadas de 1,35 cm.
-- Cor principal: `#0F172A`.
-- Faixa secundária: `#0B2447`.
-- Cards/tabelas: fundo claro `#E0EAFF`, bordas `#CBD5E1`.
-- Texto principal: tons de slate/cinza-azulado.
+- Página A4, com margens e respiro visual.
+- A paleta vem de `branding` no JSON: `primary_color`, `secondary_color`, `accent_color`, `text_color`, `muted_color`, `border_color` e `highlight_color` aceitam hexadecimal.
+- A capa usa `branding.cover_style`: `minimal`, `geometric` (padrão) ou `bold`; `cover_label` adiciona uma identificação curta no topo.
+- Sem `branding`, usar a paleta CIMOL: principal `#0F172A`, secundária `#0B2447`, destaque `#E0EAFF` e bordas `#CBD5E1`.
+- Centralizar tabelas dentro da área útil, mantendo folga lateral; nunca encostá-las visualmente nas bordas da página.
 - Rodapé com data/descrição à esquerda e número da página à direita.
 - Cabeçalho nas páginas internas com o nome do plano.
 
 ## Quando faltar informação
 
-Se o usuário não fornecer tudo, gerar uma versão com base no contexto disponível e marcar projeções como estimativas. Só pedir complemento quando faltar algo essencial, como o nome do projeto. QR codes são opcionais.
+Se faltar conteúdo do plano, marque projeções como estimativas. Se faltar o briefing visual, faça as perguntas do briefing obrigatório antes de gerar. QR codes são opcionais.

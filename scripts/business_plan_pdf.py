@@ -55,6 +55,28 @@ BODY_FONT = "Helvetica"
 BOLD_FONT = "Helvetica-Bold"
 
 
+def color(value: Any, fallback: colors.Color) -> colors.Color:
+    """Converte uma cor hexadecimal do briefing, preservando um fallback seguro."""
+    try:
+        return colors.HexColor(str(value)) if value else fallback
+    except (TypeError, ValueError):
+        return fallback
+
+
+def apply_branding(data: dict[str, Any]) -> dict[str, Any]:
+    """Aplica a paleta opcional do projeto sem perder o tema CIMOL como padrão."""
+    global NAVY, DEEP_BLUE, SLATE, MUTED, ACCENT, GREEN, BORDER
+    branding = data.get("branding", {})
+    NAVY = color(branding.get("primary_color"), colors.HexColor("#0F172A"))
+    DEEP_BLUE = color(branding.get("secondary_color"), colors.HexColor("#0B2447"))
+    SLATE = color(branding.get("text_color"), colors.HexColor("#334155"))
+    MUTED = color(branding.get("muted_color"), colors.HexColor("#64748B"))
+    ACCENT = color(branding.get("accent_color"), colors.HexColor("#E0EAFF"))
+    GREEN = color(branding.get("highlight_color"), colors.HexColor("#DCFCE7"))
+    BORDER = color(branding.get("border_color"), colors.HexColor("#CBD5E1"))
+    return branding
+
+
 def register_fonts() -> None:
     """Registra uma fonte com suporte bom a acentos, com fallback seguro."""
     global BODY_FONT, BOLD_FONT
@@ -197,15 +219,31 @@ def table_style(header_rows: int = 1) -> TableStyle:
     return TableStyle(ops)
 
 
+def centered(table: Table) -> Table:
+    """Mantém a tabela afastada das bordas e visualmente equilibrada."""
+    table.hAlign = "CENTER"
+    return table
+
+
 def cover_canvas(c, doc, data: dict[str, Any]) -> None:
+    branding = data.get("branding", {})
+    cover_style = str(branding.get("cover_style", "geometric")).lower()
     c.saveState()
     c.setFillColor(NAVY)
     c.rect(0, PAGE_HEIGHT - 7.5 * cm, PAGE_WIDTH, 7.5 * cm, stroke=0, fill=1)
     c.setFillColor(DEEP_BLUE)
     c.rect(0, PAGE_HEIGHT - 9.0 * cm, PAGE_WIDTH, 1.5 * cm, stroke=0, fill=1)
-    c.setFillColor(colors.Color(1, 1, 1, alpha=0.08))
-    c.circle(PAGE_WIDTH - 2.2 * cm, PAGE_HEIGHT - 2.0 * cm, 2.6 * cm, fill=1, stroke=0)
-    c.circle(PAGE_WIDTH - 5.0 * cm, PAGE_HEIGHT - 4.0 * cm, 1.2 * cm, fill=1, stroke=0)
+    if cover_style == "bold":
+        c.setFillColor(ACCENT)
+        c.rect(PAGE_WIDTH - 3.0 * cm, PAGE_HEIGHT - 7.5 * cm, 3.0 * cm, 7.5 * cm, stroke=0, fill=1)
+    elif cover_style != "minimal":
+        c.setFillColor(colors.Color(1, 1, 1, alpha=0.08))
+        c.circle(PAGE_WIDTH - 2.2 * cm, PAGE_HEIGHT - 2.0 * cm, 2.6 * cm, fill=1, stroke=0)
+        c.circle(PAGE_WIDTH - 5.0 * cm, PAGE_HEIGHT - 4.0 * cm, 1.2 * cm, fill=1, stroke=0)
+    if branding.get("cover_label"):
+        c.setFont(BOLD_FONT, 8)
+        c.setFillColor(WHITE)
+        c.drawRightString(PAGE_WIDTH - 1.4 * cm, PAGE_HEIGHT - 0.8 * cm, str(branding["cover_label"]))
 
     c.setStrokeColor(BORDER)
     c.line(1.3 * cm, 1.1 * cm, PAGE_WIDTH - 1.3 * cm, 1.1 * cm)
@@ -277,6 +315,7 @@ def qr_image(path: str | None, label: str) -> Image:
 
 
 def build_pdf(data: dict[str, Any], output: str, qr1: str | None = None, qr2: str | None = None) -> None:
+    apply_branding(data)
     register_fonts()
     styles = make_styles()
     story: list[Any] = []
@@ -307,7 +346,7 @@ def build_pdf(data: dict[str, Any], output: str, qr1: str | None = None, qr2: st
         ("TOPPADDING", (0, 0), (-1, -1), 6),
         ("BOTTOMPADDING", (0, 0), (-1, -1), 6),
     ]))
-    story.append(card_table)
+    story.append(centered(card_table))
     story.append(Spacer(1, 0.45 * cm))
     story.append(Paragraph(text(data.get("value_proposition", "")), styles["center_small"]))
     story.append(PageBreak())
@@ -336,7 +375,7 @@ def build_pdf(data: dict[str, Any], output: str, qr1: str | None = None, qr2: st
         ("LEFTPADDING", (0, 0), (-1, -1), 0),
         ("RIGHTPADDING", (0, 0), (-1, -1), 12),
     ]))
-    story.append(page2_table)
+    story.append(centered(page2_table))
     story.append(Spacer(1, 0.25 * cm))
     story.append(pbold("Diferenciais competitivos", styles["mini_head"]))
     diffs = page2.get("differentials", [])[:4]
@@ -345,7 +384,7 @@ def build_pdf(data: dict[str, Any], output: str, qr1: str | None = None, qr2: st
         diff_rows.append([p(item.get("differential"), styles["small"]), p(item.get("impact"), styles["small"])])
     diff_table = Table(diff_rows, colWidths=[5.0 * cm, 11.2 * cm])
     diff_table.setStyle(table_style())
-    story.append(diff_table)
+    story.append(centered(diff_table))
     story.append(PageBreak())
 
     # Página 3
@@ -359,7 +398,7 @@ def build_pdf(data: dict[str, Any], output: str, qr1: str | None = None, qr2: st
         bm_rows.append([p(row.get("source"), styles["small"]), p(row.get("description"), styles["small"])])
     bm_table = Table(bm_rows, colWidths=[4.8 * cm, 11.4 * cm])
     bm_table.setStyle(table_style())
-    story.append(bm_table)
+    story.append(centered(bm_table))
     story.append(Spacer(1, 0.2 * cm))
 
     story.append(pbold("Pacotes sugeridos", styles["mini_head"]))
@@ -368,7 +407,7 @@ def build_pdf(data: dict[str, Any], output: str, qr1: str | None = None, qr2: st
         pk_rows.append([p(row.get("plan"), styles["small"]), p(row.get("price"), styles["small"]), p(row.get("fit"), styles["small"])])
     pk_table = Table(pk_rows, colWidths=[3.0 * cm, 5.6 * cm, 7.6 * cm])
     pk_table.setStyle(table_style())
-    story.append(pk_table)
+    story.append(centered(pk_table))
     story.append(Spacer(1, 0.25 * cm))
 
     story.append(pbold("O que já foi consolidado no projeto", styles["mini_head"]))
@@ -380,7 +419,7 @@ def build_pdf(data: dict[str, Any], output: str, qr1: str | None = None, qr2: st
         rd_rows.append([p(row.get("phase"), styles["small"]), p(row.get("goal"), styles["small"])])
     rd_table = Table(rd_rows, colWidths=[2.7 * cm, 13.1 * cm])
     rd_table.setStyle(table_style())
-    story.append(rd_table)
+    story.append(centered(rd_table))
     story.append(PageBreak())
 
     # Página 4
@@ -397,7 +436,7 @@ def build_pdf(data: dict[str, Any], output: str, qr1: str | None = None, qr2: st
                           pbold(row.get("value"), styles["small"]) if row.get("highlight") else p(row.get("value"), styles["small"])])
         if row.get("highlight"):
             highlight_row_indexes.append(idx)
-    proj_table = Table(proj_rows, colWidths=[6.0 * cm, 4.6 * cm])
+    proj_table = Table(proj_rows, colWidths=[4.6 * cm, 3.4 * cm])
     proj_ops = list(table_style().getCommands())
     for row_index in highlight_row_indexes:
         proj_ops.append(("BACKGROUND", (0, row_index), (-1, row_index), GREEN))
@@ -408,7 +447,7 @@ def build_pdf(data: dict[str, Any], output: str, qr1: str | None = None, qr2: st
         [pbold("Investimento inicial sugerido", styles["small"]), pbold("Uso", styles["small"])],
         [p(inv.get("amount"), styles["small"]), p(inv.get("use"), styles["small"])],
     ]
-    inv_table = Table(inv_rows, colWidths=[3.7 * cm, 6.9 * cm])
+    inv_table = Table(inv_rows, colWidths=[2.8 * cm, 5.2 * cm])
     inv_table.setStyle(table_style())
 
     p4_right = [pbold("Projeção resumida - 12 meses", styles["mini_head"]), proj_table, Spacer(1, 0.18 * cm), pbold("Investimento", styles["mini_head"]), inv_table]
@@ -418,7 +457,7 @@ def build_pdf(data: dict[str, Any], output: str, qr1: str | None = None, qr2: st
         ("LEFTPADDING", (0, 0), (-1, -1), 0),
         ("RIGHTPADDING", (0, 0), (-1, -1), 12),
     ]))
-    story.append(p4_table)
+    story.append(centered(p4_table))
     story.append(Spacer(1, 0.3 * cm))
     story.append(p(page4.get("executive_conclusion", ""), styles["body"]))
     story.append(PageBreak())
@@ -450,7 +489,7 @@ def build_pdf(data: dict[str, Any], output: str, qr1: str | None = None, qr2: st
         ("TOPPADDING", (0, 0), (-1, -1), 10),
         ("BOTTOMPADDING", (0, 0), (-1, -1), 10),
     ]))
-    story.append(qr_table)
+    story.append(centered(qr_table))
     story.append(Spacer(1, 0.45 * cm))
     story.append(p(page5.get("sources", ""), styles["small"]))
 

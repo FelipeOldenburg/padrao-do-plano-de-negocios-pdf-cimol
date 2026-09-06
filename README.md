@@ -11,6 +11,7 @@ O identificador técnico da skill é `padrao-do-plano-de-negocios-pdf-cimol`. El
 - Modelo de negócio, preços, operação e roadmap.
 - Estratégia comercial e projeção financeira estimada de 12 meses.
 - Anexo com dois QR codes, ou placeholders claros quando eles não forem fornecidos.
+- Identidade visual adaptável: cores, estilo de capa e identificação do projeto.
 
 ## Pré-requisitos
 
@@ -57,6 +58,26 @@ Crie um plano de negócios para uma plataforma de gestão escolar. Use os dados 
 marque valores não comprovados como estimativas e gere o PDF com QR codes em anexo.
 ```
 
+Antes de gerar, a skill pede um briefing curto: nome do projeto, segmento/público, problema e solução, cores da marca e estilo de capa (`minimal`, `geometric` ou `bold`). Ela só usa o visual CIMOL como padrão quando a pessoa confirmar que não possui identidade visual própria.
+
+## Personalização visual
+
+Inclua `branding` no JSON para adaptar o material ao projeto. Todos os campos de cor usam hexadecimal; os campos ausentes mantêm o padrão CIMOL.
+
+```json
+"branding": {
+  "primary_color": "#173B5C",
+  "secondary_color": "#0E7490",
+  "accent_color": "#E0F2FE",
+  "cover_style": "geometric",
+  "cover_label": "NOME DA MARCA | PLANO 2026"
+}
+```
+
+- `cover_style`: `minimal`, `geometric` (padrão) ou `bold`.
+- `text_color`, `muted_color`, `border_color` e `highlight_color` refinam texto, bordas e destaques quando necessário.
+- Tabelas são centralizadas dentro da área útil, preservando espaço lateral e evitando o efeito de conteúdo encostado na página.
+
 ## Formato do JSON
 
 Copie `examples/cimol.sample.json` e edite-o; ele é a referência completa do formato. As chaves principais são:
@@ -64,6 +85,7 @@ Copie `examples/cimol.sample.json` e edite-o; ele é a referência completa do f
 | Campo | Conteúdo |
 | --- | --- |
 | `title`, `project_name`, `subtitle` | Identificação do plano e do projeto |
+| `branding` | Cores, estilo e rótulo da capa do projeto |
 | `summary_cards` | Problema, solução, público-alvo e estágio |
 | `page2` | Oportunidade, mercado e diferenciais |
 | `page3` | Modelo de negócio, preços, consolidados e roadmap |

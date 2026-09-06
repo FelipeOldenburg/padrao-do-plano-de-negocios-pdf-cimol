@@ -2,6 +2,17 @@
   "title": "Plano de Negócios",
   "project_name": "Plataforma de Gestão Escolar CIMOL",
   "subtitle": "Solução web para centralizar horários, salas, comunicação institucional e operações do CPD, com foco inicial no contexto escolar do CIMOL e potencial de expansão para outras instituições.",
+  "branding": {
+    "primary_color": "#0F172A",
+    "secondary_color": "#0B2447",
+    "accent_color": "#E0EAFF",
+    "text_color": "#334155",
+    "muted_color": "#64748B",
+    "border_color": "#CBD5E1",
+    "highlight_color": "#DCFCE7",
+    "cover_style": "geometric",
+    "cover_label": "CIMOL | PLANO 2026"
+  },
   "updated_label": "Atualizado em setembro de 2026",
   "cover_footer": "Documento sintético - máximo de 5 páginas",
   "summary_cards": [
